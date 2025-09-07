@@ -15,8 +15,6 @@ class SetMetadata:
         creation_date = datetime.fromtimestamp(creation_timestamp)
         metadata["file_creation_timestamp"] = str(creation_date)
 
-
-
         return metadata
 
 
