@@ -1,6 +1,6 @@
 import os
 class ReadFiles:
-    def __init__(self,folder_path = "../../data/podcasts"):
+    def __init__(self,folder_path = r"C:\PycharmProjects\PycharmProjects\the_muezzin_project\data\podcasts"):
         self.folder_path = folder_path
 
     def get_all_file_paths(self):
