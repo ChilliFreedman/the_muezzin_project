@@ -1,24 +1,32 @@
 from pathlib import Path
 from datetime import datetime
+from utils.checking_logs import Logger
 class SetMetadata:
     def __init__(self,file_path = r"C:\PycharmProjects\PycharmProjects\the_muezzin_project\data\podcasts\podcast_1.wav"):
         self.file_path = file_path
+        self.logger = Logger.get_logger()
 
     def get_metadata(self):
-        metadata = {}
-        my_path = Path(self.file_path)
-        metadata["file_name"] = my_path.name
-        file_stats = my_path.stat()
-        #print(file_stats)
-        metadata["file_size_bytes"] = file_stats.st_size
-        creation_timestamp = file_stats.st_ctime
-        #print(type(creation_timestamp))
-        creation_date = datetime.fromtimestamp(int(creation_timestamp))
-        #date_string = str(creation_date)
-        #metadata["file_creation_timestamp"] = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
-        metadata["file_creation_timestamp"] = str(creation_date)
+        try:
 
-        return metadata
+            metadata = {}
+            my_path = Path(self.file_path)
+            metadata["file_name"] = my_path.name
+            file_stats = my_path.stat()
+            #print(file_stats)
+            metadata["file_size_bytes"] = file_stats.st_size
+            creation_timestamp = file_stats.st_ctime
+            #print(type(creation_timestamp))
+            creation_date = datetime.fromtimestamp(int(creation_timestamp))
+            #date_string = str(creation_date)
+            #metadata["file_creation_timestamp"] = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
+            metadata["file_creation_timestamp"] = str(creation_date)
+            self.logger.info("In file 'creating_metadata' creating metadata dict was successful")
+            return metadata
+
+        except Exception as e:
+            self.logger.exception(f"In file 'creating_metadata' an unexpected error occurred: {e}")
+
 
 
 if __name__ == "__main__":
