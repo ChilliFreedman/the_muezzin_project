@@ -1,10 +1,12 @@
 from elasticserch_dal import ElasticDAL
 from kafka_consumer import SetConsumer
+from mongodb_dal import MongoDal
 from datetime import datetime
 class Manager:
     def __init__(self):
         self.set_consumer = SetConsumer()
         self.elas_dal = ElasticDAL()
+        self.mongo_dal = MongoDal()
 
 
     def run_functions(self):
@@ -22,6 +24,8 @@ class Manager:
             doc_id = hash(file_name)
             #insert id and metadata doc
             self.elas_dal.insert_doc(doc_id,metadata_dict)
+            file_path = message.value["file_path"]
+            self.mongo_dal.insert(file_path,doc_id)
 
 
 
