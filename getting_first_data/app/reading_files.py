@@ -8,6 +8,7 @@ class ReadFiles:
         for root, _, files in os.walk(self.folder_path):
             for file in files:
                 file_paths.append(os.path.join(root, file))
+        #print(self.folder_path)
         return file_paths
 
     def get_first_path(self):
