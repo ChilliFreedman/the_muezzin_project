@@ -12,7 +12,10 @@ class SetMetadata:
         #print(file_stats)
         metadata["file_size_bytes"] = file_stats.st_size
         creation_timestamp = file_stats.st_ctime
-        creation_date = datetime.fromtimestamp(creation_timestamp)
+        #print(type(creation_timestamp))
+        creation_date = datetime.fromtimestamp(int(creation_timestamp))
+        #date_string = str(creation_date)
+        #metadata["file_creation_timestamp"] = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
         metadata["file_creation_timestamp"] = str(creation_date)
 
         return metadata
