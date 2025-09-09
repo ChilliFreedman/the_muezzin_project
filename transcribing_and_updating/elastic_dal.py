@@ -17,9 +17,9 @@ class ElasticDAL:
         }
         try:
             self.es.indices.put_mapping(index=self.index, body=new_mapping)
-            print(f"Mapping updated successfully for index '{self.index}'.")
+            self.logger.info(f"Mapping updated successfully for index '{self.index}'.")
         except Exception as e:
-            print(f"Error updating mapping: {e}")
+            self.logger.exception(f"Error updating mapping: {e}")
 
         update_body = {"doc":{"transcription_of_audio":converted_text}}
         self.es.update(index=self.index,id= doc_id,body= update_body)
