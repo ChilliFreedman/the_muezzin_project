@@ -25,11 +25,15 @@ class MongoDal:
 
     def insert(self,file_path,file_id_hash_name):
         try:
+            if self.fs.exists({"id":file_id_hash_name}):
+                self.logger.info(f"already exists {file_id_hash_name}")
+                return
             with open(file_path, 'rb') as file_data:
                 file_id = self.fs.put(file_data,_id = file_id_hash_name)
+            self.logger.info(f"File uploaded with file_id: {file_id}")
             self.logger.info("In file 'mongodb_dal' the insert file was successful")
         except Exception as e:
             self.logger.exception(f"In file 'mongodb_dal' in func insert an unexpected error occurred: {e}")
 
-        print(f"File uploaded with file_id: {file_id}")
+
 

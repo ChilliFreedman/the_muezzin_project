@@ -1,3 +1,4 @@
+import hashlib
 from elasticserch_dal import ElasticDAL
 from kafka_consumer import SetConsumer
 from mongodb_dal import MongoDal
@@ -7,6 +8,9 @@ class Manager:
         self.set_consumer = SetConsumer()
         self.elas_dal = ElasticDAL()
         self.mongo_dal = MongoDal()
+
+    def generate_id(self,file_name):
+        return hashlib.md5(file_name.encode('utf-8')).hexdigest()
 
 
     def run_functions(self):
@@ -21,7 +25,9 @@ class Manager:
             metadata_dict["file_creation_timestamp"] = datetime.strptime(date_string, "%Y-%m-%d %H:%M:%S")
             file_name = message.value["metadata_dict"]["file_name"]
             #get id with hash func of file name
-            doc_id = hash(file_name)
+
+            doc_id = self.generate_id(file_name)
+            print(type(doc_id))
             #insert id and metadata doc
             self.elas_dal.insert_doc(doc_id,metadata_dict)
             file_path = message.value["file_path"]
