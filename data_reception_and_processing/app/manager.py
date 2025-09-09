@@ -3,6 +3,7 @@ from elasticserch_dal import ElasticDAL
 from kafka_consumer import SetConsumer
 from mongodb_dal import MongoDal
 from datetime import datetime
+from kafka_producer import SetKafkaProducer
 class Manager:
     def __init__(self):
         self.set_consumer = SetConsumer()
@@ -27,11 +28,15 @@ class Manager:
             #get id with hash func of file name
 
             doc_id = self.generate_id(file_name)
-            print(type(doc_id))
             #insert id and metadata doc
             self.elas_dal.insert_doc(doc_id,metadata_dict)
             file_path = message.value["file_path"]
             self.mongo_dal.insert(file_path,doc_id)
+            id_to_kafka = {"file_id":doc_id}
+            kafka_producer = SetKafkaProducer()
+            kafka_producer.producer_config()
+            kafka_producer.producer_publish("file_id_topic", id_to_kafka)
+            kafka_producer.producer_flush()
 
 
 

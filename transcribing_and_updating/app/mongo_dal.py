@@ -21,22 +21,12 @@ class MongoDal:
         except Exception as e:
             self.logger.exception(f"In file 'mongodb_dal' by the config an unexpected error occurred: {e}")
 
+
     def get_all_id(self):
         file_ids = []
         for grid_out in self.fs.find():
             file_ids.append(grid_out._id)
-
         return file_ids
-
-
-
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
     mongodal = MongoDal()

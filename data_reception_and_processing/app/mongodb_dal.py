@@ -6,7 +6,7 @@ import gridfs
 class MongoDal:
     def __init__(self):
         self.logger = Logger.get_logger()
-        self.convert = Convert()
+
         try:
 
             self.database_name = os.getenv("MONGO_DB_NAME", "muezzin_podcasts")

@@ -17,7 +17,10 @@ class SetConsumer:
             consumer = KafkaConsumer(topic,
                                      group_id='my-group',
                                      value_deserializer=lambda m: json.loads(m.decode('ascii')),
-                                     bootstrap_servers=bootstrap_servers)  # ,consumer_timeout_ms=10000)
+                                     bootstrap_servers=bootstrap_servers)#,consumer_timeout_ms=10000)
+
+
+
             self.consumer = consumer
             self.logger.info("In file 'kafka_consumer' the config was successful")
         except Exception as e:
@@ -33,15 +36,11 @@ class SetConsumer:
 
         for message in self.consumer:
 
-                print(message.value["file_path"])
-                print(message.value["metadata_dict"])
-                file_name = message.value["metadata_dict"]["file_name"]
-                print(file_name)
-                print((hash(file_name)))
+                print(message.value["file_id"])
 
 
 if __name__ == "__main__":
     set_consumer = SetConsumer()
-    set_consumer.get_consumer_events("file_path_and_basic_metadata")
+    set_consumer.get_consumer_events("file_id_topic")
     #set_consumer.print_messages()
     set_consumer.get_messages_in_list()
