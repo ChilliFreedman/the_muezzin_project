@@ -1,4 +1,4 @@
-from time import sleep
+
 from reading_files import ReadFiles
 from creating_metadata import SetMetadata
 from combining_data_into_json import DataToJson
@@ -17,10 +17,7 @@ class Manager:
             kafka_producer.producer_config()
             kafka_producer.producer_publish("file_path_and_basic_metadata",all_data)
             kafka_producer.producer_flush()
-            #sleep(60)
-            # print(file_path)
-            # print(metadata_dict)
-            # print(all_data)
+
 
 if __name__ == "__main__":
     manager = Manager()
