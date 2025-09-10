@@ -7,7 +7,7 @@ class Logger:
     @classmethod
     def get_logger(cls,name = os.getenv("LOGGERS_NAME", "my_logger"),
                    es_host = os.getenv("ELASTIC_HOST", "http://localhost:9200")
-                   ,index=os.getenv("ELASTIC_INDEX", "index_logges")
+                   ,index=os.getenv("ELASTIC_INDEX_NAME", "index_logges")
                    ,level=logging.DEBUG):
 
         if cls._logger:
